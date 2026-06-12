@@ -57,6 +57,7 @@ API route 必须：
 ## UI 与组件
 
 - `app/components/ui` 是 shadcn-vue 源码区，不放业务逻辑。
+- `app/screens` 是页面主体聚合和页面私有拆分区，不是 Nuxt 路由目录；组件由 Nuxt 自动导入，页面入口不需要手动 import screen。
 - 业务页面优先使用 `app/components/common` 的项目级包装组件。
 - 新增交互优先放在 `app/features/*`，避免让页面承载复杂浏览器状态。
 - 组件数据流保持单向：父级组织请求和状态，子组件通过 props 接收数据，通过 emit 抛出用户意图。

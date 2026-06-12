@@ -9,7 +9,8 @@ Colorway Starter 使用 Nuxt 4。页面通过 SSR 友好的 `useFetch` 读取 Ni
 项目使用 Tailwind CSS v4，因此有效浏览器下限不是 Vite 默认值，而是 Chrome 111、Edge 111、Safari 16.4、Firefox 128。构建目标在 `nuxt.config.ts` 中显式对齐这组版本。
 
 ```text
-app/pages             Nuxt 页面
+app/pages             Nuxt 页面入口、SEO 和路由级数据编排
+app/screens           页面级聚合组件和页面私有拆分组件
 app/components/ui     shadcn-vue 源码区
 app/components/common 项目级 UI 包装
 app/features          具体业务交互组件
@@ -25,6 +26,17 @@ tests                 单元测试和 E2E 测试
 ## 数据流
 
 公开商品数据和用户资料都从 `server/queries` 读取，内部再调用 mock 数据源。页面不直接导入 `server/mocks/*`，这样 clone 后替换真实 API 或数据库时，页面结构不用大改。
+
+`app/pages` 只承担 Nuxt 文件路由入口、路由参数、页面级 SEO、`defineOptions` / `definePageMeta` 和必要的首屏数据读取。页面主体 UI 放在 `app/screens/<screen-name>`，由对应的 `*Screen.vue` 聚合。
+
+`app/screens` 不参与 Nuxt 文件路由扫描，并已加入 Nuxt 组件自动导入。它用于存放只服务某个页面的聚合组件、页面私有拆分组件和页面级说明文档。页面入口可直接使用对应的 `*Screen` 组件，不需要手动 import。
+
+每个 screen 目录应维护 `README.md`，至少包含：
+
+- `## 功能概览`：说明当前页面的用户可见能力、数据来源、语言或权限边界。
+- `## 代码组织结构`：说明页面入口、`*Screen.vue`、页面私有组件、相关 `features` 或 API 的分工。
+
+screen 内组件默认不跨页面复用；一旦需要跨页面复用，应上移到 `app/components/common` 或更具体的 `app/features/*`。
 
 默认读取路径：
 

@@ -4,8 +4,9 @@
 
 | 任务 | 优先修改位置 | 注意事项 |
 | --- | --- | --- |
-| 改首页内容 | `app/pages/index.vue` | 页面通过 API 读取数据，不直接导入 mock。 |
-| 改商品详情 | `app/pages/products/[id].vue`、`server/queries/products.ts` | 保持 route params 与 API 行为一致。 |
+| 改首页内容 | `app/pages/index.vue`、`app/screens/home/*` | 页面通过 API 读取数据，不直接导入 mock；主体 UI 放在 screen。 |
+| 改商品详情 | `app/pages/products/[id].vue`、`app/screens/product-detail/*`、`server/queries/products.ts` | 保持 route params 与 API 行为一致。 |
+| 拆分页面主体 UI | `app/pages/*`、`app/screens/<screen-name>/*` | `pages` 保留路由入口和页面级配置，`screens` 自动导入并放页面聚合、私有组件和 README。 |
 | 接真实商品数据 | `server/queries/products.ts`、必要时新增 mapper/schema 测试 | DTO 不直接进入页面，先读 `docs/data-fetching.md`。 |
 | 接真实用户数据 | `server/queries/user.ts`、认证相关 ADR | 先确认认证和权限方案，页面不要读取后端用户 DTO。 |
 | 改登录表单 | `app/features/login/LoginForm.vue` | 表单可用客户端状态，校验继续用 Zod。 |

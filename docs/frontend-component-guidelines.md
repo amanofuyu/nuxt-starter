@@ -63,9 +63,26 @@ props.item.checked = true
 ## 数据编排位置
 
 - 页面负责路由参数、SEO 和首屏数据编排。
+- `app/screens/*` 负责页面主体 UI 聚合、页面私有拆分组件和页面级说明文档，不是第二套路由目录。该目录已加入 Nuxt 组件自动导入，`app/pages/*` 可直接使用对应 `*Screen` 组件。
 - `app/features/*` 负责浏览器交互状态、局部刷新、表单状态和用户触发动作。
 - `app/components/common/*` 负责项目级 UI 包装，不做接口请求。
 - `app/components/ui/*` 只放 shadcn-vue 基础组件，不做业务请求、不读 runtime config。
+
+推荐：
+
+```text
+app/pages/products/[id].vue
+app/screens/product-detail/ProductDetailScreen.vue
+app/screens/product-detail/ProductFeatureList.vue
+app/screens/product-detail/README.md
+```
+
+`app/pages/products/[id].vue` 保留 Nuxt 路由语义和页面级配置；`app/screens/product-detail/*` 聚合并拆分页面主体。screen 内组件如果开始被其他页面依赖，应移动到 `app/components/common` 或 `app/features`，不要让 `screens` 变成隐式全局组件库。
+
+每个 screen 目录的 `README.md` 必须记录：
+
+- `## 功能概览`：当前页面的整体功能、用户流程、数据来源、语言、权限或缓存边界。
+- `## 代码组织结构`：`app/pages/*`、`*Screen.vue`、页面私有组件、相关 `app/features/*`、API 或 query 的职责分工。
 
 如果一个组件同时包含请求、表单、弹窗和多段业务状态，优先拆成业务容器和展示组件，而不是让单个 Vue 文件继续膨胀。
 

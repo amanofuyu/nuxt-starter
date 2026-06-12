@@ -18,6 +18,10 @@ export default defineNuxtConfig({
       path: '~/features',
       pathPrefix: false,
     },
+    {
+      path: '~/screens',
+      pathPrefix: false,
+    },
   ],
   shadcn: {
     prefix: '',

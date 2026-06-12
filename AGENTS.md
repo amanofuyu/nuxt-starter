@@ -61,7 +61,8 @@ Colorway Starter 是一个单仓库 GitHub Template 风格的 C 端 Nuxt starter
 
 ## 目录边界
 
-- `app/pages` 放 Nuxt 页面。
+- `app/pages` 放 Nuxt 页面入口、路由参数、页面级 SEO 和必要的首屏数据读取。
+- `app/screens` 放路由页面背后的页面级聚合组件、页面私有拆分组件和页面级说明文档；不是路由目录，并已配置为 Nuxt 组件自动导入。
 - `app/components/ui` 是 shadcn-vue 源码区，不放业务逻辑。
 - `app/components/common` 放项目级稳定包装组件。
 - `app/features` 放较具体的业务交互组件。

@@ -42,7 +42,8 @@ Colorway Starter 是一个面向 C 端应用的 Nuxt 4 starter。它适合作为
 项目刻意把页面、客户端交互、服务端数据读取和 mock 数据拆开：
 
 ```text
-app/pages             Nuxt 页面、SEO、路由级数据编排
+app/pages             Nuxt 页面入口、SEO、路由级数据编排
+app/screens           页面级聚合组件和页面私有拆分组件
 app/features          需要浏览器状态的业务交互组件
 app/components/common 项目级稳定包装组件
 app/components/ui     shadcn-vue 基础组件源码区
@@ -54,6 +55,8 @@ i18n/locales          中英文语言包
 ```
 
 页面默认通过 Nitro API 读取数据；API 再进入 `server/queries/*`。页面不要直接导入 `server/mocks/*`，客户端组件不要导入 `server/*`。
+
+`app/pages` 只承担 Nuxt 路由入口和页面级配置；页面主体 UI 聚合和只服务单页的拆分组件放在 `app/screens/<screen-name>`。`app/screens` 已加入 Nuxt 组件自动导入，页面入口可直接使用对应的 `*Screen` 组件。
 
 i18n 默认使用中文无前缀路径，英文使用 `/en` 前缀。用户可见 mock 数据通过 API 的 `locale` 查询参数返回对应语言。
 
