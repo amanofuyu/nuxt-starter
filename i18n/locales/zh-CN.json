@@ -1,0 +1,117 @@
+{
+  "common": {
+    "brand": "Colorway Starter",
+    "product": "商品",
+    "profile": "资料",
+    "login": "登录",
+    "home": "首页",
+    "language": "语言",
+    "chinese": "中文",
+    "english": "English"
+  },
+  "nav": {
+    "viewProduct": "查看商品",
+    "toggleTheme": "切换主题"
+  },
+  "footer": {
+    "template": "Nuxt 4 template"
+  },
+  "home": {
+    "seo": {
+      "title": "Colorway Starter",
+      "description": "一个面向 C 端应用的 Nuxt starter。"
+    },
+    "hero": {
+      "title": "为 C 端产品准备的 Nuxt 前端底座",
+      "description": "Colorway Starter 把 Nuxt、Nitro、Vue、shadcn-vue、测试和 Docker 收进一套清晰的工程界面。它像产品基础设施一样克制、可审查、可替换。",
+      "viewSampleProduct": "查看示例商品",
+      "openPortal": "打开用户门户",
+      "workbench": "Starter workbench",
+      "workbenchDescription": "页面数据来自 Nitro API 和 server/queries",
+      "verifyLine": "verify、E2E、Docker smoke 都有固定入口",
+      "proofPoints": {
+        "ssr": "SSR 首屏优先",
+        "backend": "不绑定后端供应商",
+        "replace": "clone 后快速替换"
+      }
+    },
+    "capabilities": {
+      "eyebrow": "Flexible starter surfaces",
+      "title": "从 landing 到轻量门户，边界先于功能堆叠",
+      "description": "它不是后台模板市场，也不是隐式全栈框架。默认能力保持轻量，把后续认证、数据库、支付或分析接入留给显式 ADR。",
+      "items": {
+        "ssr": {
+          "title": "Nuxt SSR 首屏优先",
+          "text": "页面默认保留 SSR 数据路径，首屏内容和 SEO 数据不被客户端状态绑架。"
+        },
+        "data": {
+          "title": "数据入口集中",
+          "text": "页面通过 Nitro API 进入 server/queries，mock 只是可替换数据源。"
+        },
+        "boundary": {
+          "title": "AI 边界检查",
+          "text": "客户端模块、服务端目录、环境变量和 API Route 都有固定审查入口。"
+        },
+        "verify": {
+          "title": "验证路径固定",
+          "text": "verify、E2E、Docker smoke 形成 starter 的交付基线。"
+        }
+      }
+    },
+    "proof": {
+      "eyebrow": "Reliable by default",
+      "title": "把可验证性放进 starter 的第一天",
+      "description": "每个入口都尽量短，每条边界都有文档和脚本托底。AI 修改时可以先读规则、再改局部、最后跑同一组验证。",
+      "stats": {
+        "services": "默认第三方服务",
+        "boundaries": "核心边界检查",
+        "verify": "统一验证命令"
+      }
+    }
+  },
+  "login": {
+    "seoTitle": "登录 | Colorway Starter",
+    "title": "登录页入口",
+    "description": "这里只演示 vee-validate + Zod 的客户端边界，不接入真实认证。clone 后请先选择认证方案，再把提交逻辑移到服务端安全边界。",
+    "backHome": "返回首页",
+    "cardTitle": "模拟登录",
+    "email": "邮箱",
+    "password": "密码",
+    "emailError": "请输入有效邮箱",
+    "passwordError": "密码至少 8 位",
+    "passwordPlaceholder": "至少 8 位",
+    "formDescription": "这是 mock 表单，不会接入真实认证。",
+    "submit": "模拟登录",
+    "successTitle": "模拟登录成功",
+    "successDescription": "{email} 已通过前端表单校验。"
+  },
+  "profile": {
+    "seoTitle": "资料 | Colorway Starter",
+    "title": "用户资料示例",
+    "description": "这个页面展示看起来像登录后的用户资料，但 v1 不绑定真实 auth provider。用户私有数据默认动态读取。",
+    "loadError": "用户资料加载失败",
+    "joinedAt": "加入时间：{date}",
+    "statusMode": "状态模式",
+    "emptyTitle": "暂无会员动态",
+    "emptyDescription": "这里预留给真实项目的订单、收藏或通知数据。"
+  },
+  "recommendations": {
+    "title": "客户端推荐面板",
+    "description": "用户触发后再请求，展示 Vue Query 的边界。",
+    "refresh": "刷新推荐",
+    "empty": "点击按钮后加载局部数据，首屏资料仍由服务端渲染。"
+  },
+  "product": {
+    "backHome": "返回首页",
+    "publicData": "公开商品数据",
+    "addToTemplate": "加入项目模板",
+    "viewGuide": "查看接入说明",
+    "notFound": "商品不存在"
+  },
+  "error": {
+    "notFound": "页面不存在",
+    "generic": "页面出错了",
+    "retryLater": "请稍后重试。",
+    "backHome": "返回首页"
+  }
+}

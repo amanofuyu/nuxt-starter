@@ -57,6 +57,7 @@ curl http://localhost:3000/api/health
 生产部署时至少确认：
 
 - `NUXT_PUBLIC_APP_NAME` 是否为真实产品名。
+- `NUXT_PUBLIC_SITE_URL` 是否为生产站点的 HTTPS 根地址，用于生成 i18n SEO 链接。
 - `NUXT_APP_API_BASE_URL` 是否指向部署后的服务地址。
 - `NUXT_SERVER_ONLY_EXAMPLE_SECRET` 是否已替换为真实 secret 或删除不用。
 

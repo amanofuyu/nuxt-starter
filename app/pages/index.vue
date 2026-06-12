@@ -3,8 +3,13 @@ import type { Product } from '#shared/types/product'
 
 import { ArrowRight, CheckCircle2, Code2, Database, Layers3, ShieldCheck, Terminal } from '@lucide/vue'
 
+const { locale, t } = useI18n()
+const localePath = useLocalePath()
 const { data: productsData } = await useFetch<Product[]>('/api/products', {
   default: () => [],
+  query: {
+    locale,
+  },
 })
 
 const products = computed(() => productsData.value ?? [])
@@ -14,22 +19,41 @@ const accentClass: Record<Product['accent'], string> = {
   violet: 'stripe-product-violet',
   lemon: 'stripe-product-amber',
 }
-const proofPoints = ['SSR 首屏优先', '不绑定后端供应商', 'clone 后快速替换']
-const capabilityItems = [
-  { icon: Layers3, title: 'Nuxt SSR 首屏优先', text: '页面默认保留 SSR 数据路径，首屏内容和 SEO 数据不被客户端状态绑架。' },
-  { icon: Database, title: '数据入口集中', text: '页面通过 Nitro API 进入 server/queries，mock 只是可替换数据源。' },
-  { icon: ShieldCheck, title: 'AI 边界检查', text: '客户端模块、服务端目录、环境变量和 API Route 都有固定审查入口。' },
-  { icon: Terminal, title: '验证路径固定', text: 'verify、E2E、Docker smoke 形成 starter 的交付基线。' },
-]
-const stats = [
-  { value: '0', label: '默认第三方服务' },
-  { value: '4', label: '核心边界检查' },
-  { value: '1', label: '统一验证命令' },
-]
+const homeText = computed(() => ({
+  capabilitiesDescription: t('home.capabilities.description'),
+  capabilitiesEyebrow: t('home.capabilities.eyebrow'),
+  capabilitiesTitle: t('home.capabilities.title'),
+  heroDescription: t('home.hero.description'),
+  heroTitle: t('home.hero.title'),
+  openPortal: t('home.hero.openPortal'),
+  proofDescription: t('home.proof.description'),
+  proofEyebrow: t('home.proof.eyebrow'),
+  proofTitle: t('home.proof.title'),
+  verifyLine: t('home.hero.verifyLine'),
+  viewSampleProduct: t('home.hero.viewSampleProduct'),
+  workbench: t('home.hero.workbench'),
+  workbenchDescription: t('home.hero.workbenchDescription'),
+}))
+const proofPoints = computed(() => [
+  t('home.hero.proofPoints.ssr'),
+  t('home.hero.proofPoints.backend'),
+  t('home.hero.proofPoints.replace'),
+])
+const capabilityItems = computed(() => [
+  { icon: Layers3, title: t('home.capabilities.items.ssr.title'), text: t('home.capabilities.items.ssr.text') },
+  { icon: Database, title: t('home.capabilities.items.data.title'), text: t('home.capabilities.items.data.text') },
+  { icon: ShieldCheck, title: t('home.capabilities.items.boundary.title'), text: t('home.capabilities.items.boundary.text') },
+  { icon: Terminal, title: t('home.capabilities.items.verify.title'), text: t('home.capabilities.items.verify.text') },
+])
+const stats = computed(() => [
+  { value: '0', label: t('home.proof.stats.services') },
+  { value: '4', label: t('home.proof.stats.boundaries') },
+  { value: '1', label: t('home.proof.stats.verify') },
+])
 
 useSeoMeta({
-  title: 'Colorway Starter',
-  description: '一个面向 C 端应用的 Nuxt starter。',
+  title: () => t('home.seo.title'),
+  description: () => t('home.seo.description'),
 })
 </script>
 
@@ -41,18 +65,18 @@ useSeoMeta({
       <PageContainer class="grid min-h-[calc(100svh-4rem)] items-center gap-12 py-16 sm:py-[4.5rem] lg:grid-cols-[1fr_0.92fr] lg:py-24">
         <div class="relative z-10 max-w-2xl pt-3">
           <h1 class="type-display">
-            为 C 端产品准备的 Nuxt 前端底座
+            {{ homeText.heroTitle }}
           </h1>
           <p class="type-body-muted mt-6 max-w-[38rem]">
-            Colorway Starter 把 Nuxt、Nitro、Vue、shadcn-vue、测试和 Docker 收进一套清晰的工程界面。它像产品基础设施一样克制、可审查、可替换。
+            {{ homeText.heroDescription }}
           </p>
           <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-            <AppButton size="lg" to="/products/canvas-kit">
-              查看示例商品
+            <AppButton size="lg" :to="localePath('/products/canvas-kit')">
+              {{ homeText.viewSampleProduct }}
               <ArrowRight />
             </AppButton>
-            <AppButton size="lg" to="/profile" variant="outline">
-              打开用户门户
+            <AppButton size="lg" :to="localePath('/profile')" variant="outline">
+              {{ homeText.openPortal }}
             </AppButton>
           </div>
           <div class="type-body-sm mt-9 grid gap-3 text-muted-foreground sm:grid-cols-3">
@@ -68,10 +92,10 @@ useSeoMeta({
             <div class="flex items-center justify-between border-b border-white/10 pb-4">
               <div>
                 <p class="type-card-title text-white">
-                  Starter workbench
+                  {{ homeText.workbench }}
                 </p>
                 <p class="type-caption text-slate-400">
-                  页面数据来自 Nitro API 和 server/queries
+                  {{ homeText.workbenchDescription }}
                 </p>
               </div>
               <Badge class="border-white/10 bg-white/10 text-white hover:bg-white/10">
@@ -86,7 +110,7 @@ useSeoMeta({
               v-for="product in products"
               :key="product.id"
               :class="`motion-surface stripe-product-row ${accentClass[product.accent]}`"
-              :to="`/products/${product.id}`"
+              :to="localePath(`/products/${product.id}`)"
             >
               <div class="flex items-start justify-between gap-4">
                 <div>
@@ -102,7 +126,7 @@ useSeoMeta({
             </NuxtLink>
             <div class="type-caption flex items-center gap-2 rounded-[var(--radius-control)] bg-white/[0.06] p-3 text-slate-300">
               <CheckCircle2 class="icon-control text-emerald-300" />
-              verify、E2E、Docker smoke 都有固定入口
+              {{ homeText.verifyLine }}
             </div>
           </div>
         </div>
@@ -114,13 +138,13 @@ useSeoMeta({
         <div class="grid gap-10 lg:grid-cols-[0.7fr_1fr]">
           <div class="max-w-xl">
             <p class="type-control text-primary">
-              Flexible starter surfaces
+              {{ homeText.capabilitiesEyebrow }}
             </p>
             <h2 class="type-page-title mt-3">
-              从 landing 到轻量门户，边界先于功能堆叠
+              {{ homeText.capabilitiesTitle }}
             </h2>
             <p class="type-body-muted mt-5">
-              它不是后台模板市场，也不是隐式全栈框架。默认能力保持轻量，把后续认证、数据库、支付或分析接入留给显式 ADR。
+              {{ homeText.capabilitiesDescription }}
             </p>
           </div>
           <div class="grid gap-4 sm:grid-cols-2">
@@ -144,13 +168,13 @@ useSeoMeta({
       <PageContainer class="grid gap-10 lg:grid-cols-[1fr_0.82fr] lg:items-center">
         <div>
           <p class="type-control text-info">
-            Reliable by default
+            {{ homeText.proofEyebrow }}
           </p>
           <h2 class="type-page-title mt-3">
-            把可验证性放进 starter 的第一天
+            {{ homeText.proofTitle }}
           </h2>
           <p class="type-body-muted mt-5 max-w-2xl">
-            每个入口都尽量短，每条边界都有文档和脚本托底。AI 修改时可以先读规则、再改局部、最后跑同一组验证。
+            {{ homeText.proofDescription }}
           </p>
           <div class="mt-8 grid gap-4 sm:grid-cols-3">
             <div v-for="item in stats" :key="item.label" class="stripe-stat">

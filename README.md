@@ -16,7 +16,7 @@ Colorway Starter 是一个面向 C 端应用的 Nuxt 4 starter。它适合作为
 
 - 后台管理系统。
 - 多模板市场或 CLI 生成器。
-- 数据库、认证、支付、对象存储、邮件、短信、Analytics、Sentry、i18n、PWA、CMS、Storybook 或大型全局状态库。
+- 数据库、认证、支付、对象存储、邮件、短信、Analytics、Sentry、PWA、CMS、Storybook 或大型全局状态库。
 
 这些能力应在具体项目中先确认方案，再单独引入。
 
@@ -24,6 +24,7 @@ Colorway Starter 是一个面向 C 端应用的 Nuxt 4 starter。它适合作为
 
 - Nuxt 4 + Vue 3 + TypeScript
 - Nitro server routes
+- @nuxtjs/i18n 中英双语路由
 - Tailwind CSS v4 + shadcn-vue + Reka UI
 - Vue Query 仅用于客户端交互数据
 - vee-validate + Zod
@@ -49,9 +50,12 @@ server/api            Nitro API routes
 server/queries        服务端数据读取入口
 server/mocks          可替换 mock 数据源
 shared                app/server 共享类型、schema 和错误类型
+i18n/locales          中英文语言包
 ```
 
 页面默认通过 Nitro API 读取数据；API 再进入 `server/queries/*`。页面不要直接导入 `server/mocks/*`，客户端组件不要导入 `server/*`。
+
+i18n 默认使用中文无前缀路径，英文使用 `/en` 前缀。用户可见 mock 数据通过 API 的 `locale` 查询参数返回对应语言。
 
 ## AI 文档入口
 
@@ -87,9 +91,9 @@ shared                app/server 共享类型、schema 和错误类型
 ## Clone 后 TODO
 
 - [ ] 替换 `package.json` 的 `name`、页面 metadata 和文案。
-- [ ] 替换 `NUXT_PUBLIC_APP_NAME`、导航项、品牌色 token 和 favicon；品牌色优先集中改 `app/assets/css/tailwind.css` 的语义变量。
+- [ ] 替换 `NUXT_PUBLIC_APP_NAME`、`NUXT_PUBLIC_SITE_URL`、导航项、语言包、品牌色 token 和 favicon；品牌色优先集中改 `app/assets/css/tailwind.css` 的语义变量。
 - [ ] 用真实业务数据替换 `server/mocks/*`，但保留 `server/queries/*` 作为服务端读取入口。
-- [ ] 选择认证、数据库、支付、Analytics、Sentry、i18n 等方案前先做人工确认，不要直接引入。
+- [ ] 选择认证、数据库、支付、Analytics、Sentry 等方案前先做人工确认，不要直接引入。
 - [ ] 根据真实浏览器支持要求确认是否接受 Tailwind v4 的 Firefox 128+ 基线。
 - [ ] 根据目标部署平台调整 Docker、环境变量和 CI。
 - [ ] 运行 `pnpm verify`、`pnpm test:e2e` 和 Docker 烟测。

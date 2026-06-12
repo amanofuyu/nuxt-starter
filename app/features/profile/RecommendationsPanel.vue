@@ -4,13 +4,25 @@ import { useQuery } from '@tanstack/vue-query'
 
 import { recommendationsResponseSchema } from '#shared/api/schemas'
 
+const { locale, t } = useI18n()
+const panelText = computed(() => ({
+  description: t('recommendations.description'),
+  empty: t('recommendations.empty'),
+  refresh: t('recommendations.refresh'),
+  title: t('recommendations.title'),
+}))
+
 async function fetchRecommendations() {
-  const payload = await $fetch('/api/recommendations')
+  const payload = await $fetch('/api/recommendations', {
+    query: {
+      locale: locale.value,
+    },
+  })
   return recommendationsResponseSchema.parse(payload)
 }
 
 const { data, isFetching, refetch } = useQuery({
-  queryKey: ['recommendations'],
+  queryKey: computed(() => ['recommendations', locale.value]),
   queryFn: fetchRecommendations,
   enabled: false,
 })
@@ -22,15 +34,15 @@ const { data, isFetching, refetch } = useQuery({
       <div>
         <CardTitle class="flex items-center gap-2">
           <Sparkles class="icon-control text-primary" />
-          客户端推荐面板
+          {{ panelText.title }}
         </CardTitle>
         <p class="type-body-sm mt-2 text-muted-foreground">
-          用户触发后再请求，展示 Vue Query 的边界。
+          {{ panelText.description }}
         </p>
       </div>
       <AppButton :disabled="isFetching" size="sm" type="button" variant="outline" @click="refetch()">
         <RefreshCcw :class="isFetching ? 'animate-spin' : undefined" />
-        刷新推荐
+        {{ panelText.refresh }}
       </AppButton>
     </CardHeader>
     <CardContent>
@@ -51,7 +63,7 @@ const { data, isFetching, refetch } = useQuery({
           </div>
         </TransitionGroup>
         <p v-if="!data" class="type-body-sm text-muted-foreground">
-          点击按钮后加载局部数据，首屏资料仍由服务端渲染。
+          {{ panelText.empty }}
         </p>
       </div>
     </CardContent>

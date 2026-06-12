@@ -1,0 +1,117 @@
+{
+  "common": {
+    "brand": "Colorway Starter",
+    "product": "Product",
+    "profile": "Profile",
+    "login": "Sign in",
+    "home": "Home",
+    "language": "Language",
+    "chinese": "中文",
+    "english": "English"
+  },
+  "nav": {
+    "viewProduct": "View product",
+    "toggleTheme": "Toggle theme"
+  },
+  "footer": {
+    "template": "Nuxt 4 template"
+  },
+  "home": {
+    "seo": {
+      "title": "Colorway Starter",
+      "description": "A Nuxt starter for consumer-facing applications."
+    },
+    "hero": {
+      "title": "A Nuxt frontend foundation for consumer products",
+      "description": "Colorway Starter brings Nuxt, Nitro, Vue, shadcn-vue, tests, and Docker into a clear engineering surface. It stays restrained, reviewable, and replaceable.",
+      "viewSampleProduct": "View sample product",
+      "openPortal": "Open user portal",
+      "workbench": "Starter workbench",
+      "workbenchDescription": "Page data comes from Nitro API and server/queries",
+      "verifyLine": "verify, E2E, and Docker smoke checks all have fixed entry points",
+      "proofPoints": {
+        "ssr": "SSR-first initial screen",
+        "backend": "No backend vendor lock-in",
+        "replace": "Fast replacement after clone"
+      }
+    },
+    "capabilities": {
+      "eyebrow": "Flexible starter surfaces",
+      "title": "From landing pages to lightweight portals, boundaries come before feature sprawl",
+      "description": "This is not an admin template marketplace or an implicit full-stack framework. Defaults stay lean, while auth, databases, payments, and analytics are left to explicit ADRs.",
+      "items": {
+        "ssr": {
+          "title": "Nuxt SSR-first screens",
+          "text": "Pages keep the SSR data path by default, so first-screen content and SEO data are not captured by client state."
+        },
+        "data": {
+          "title": "Centralized data entry",
+          "text": "Pages enter server/queries through Nitro APIs, while mocks remain replaceable data sources."
+        },
+        "boundary": {
+          "title": "AI boundary checks",
+          "text": "Client modules, server folders, environment variables, and API routes all have fixed review entry points."
+        },
+        "verify": {
+          "title": "Fixed verification path",
+          "text": "verify, E2E, and Docker smoke checks form the starter delivery baseline."
+        }
+      }
+    },
+    "proof": {
+      "eyebrow": "Reliable by default",
+      "title": "Put verifiability into the starter from day one",
+      "description": "Each entry point stays short, and each boundary has documentation and scripts behind it. AI changes can read the rules, edit locally, and run the same verification set.",
+      "stats": {
+        "services": "default third-party services",
+        "boundaries": "core boundary checks",
+        "verify": "single verification command"
+      }
+    }
+  },
+  "login": {
+    "seoTitle": "Sign in | Colorway Starter",
+    "title": "Sign-in page entry",
+    "description": "This page only demonstrates the client boundary for vee-validate + Zod. It does not connect to real auth. After cloning, choose an auth provider before moving submit logic into the server security boundary.",
+    "backHome": "Back home",
+    "cardTitle": "Mock sign in",
+    "email": "Email",
+    "password": "Password",
+    "emailError": "Enter a valid email address",
+    "passwordError": "Password must be at least 8 characters",
+    "passwordPlaceholder": "At least 8 characters",
+    "formDescription": "This is a mock form and does not connect to real auth.",
+    "submit": "Mock sign in",
+    "successTitle": "Mock sign-in succeeded",
+    "successDescription": "{email} passed client-side form validation."
+  },
+  "profile": {
+    "seoTitle": "Profile | Colorway Starter",
+    "title": "User profile example",
+    "description": "This page looks like a signed-in profile, but v1 does not bind to a real auth provider. Private user data stays dynamically loaded by default.",
+    "loadError": "Failed to load user profile",
+    "joinedAt": "Joined: {date}",
+    "statusMode": "Status mode",
+    "emptyTitle": "No member activity",
+    "emptyDescription": "Reserved for orders, saved items, or notifications in real projects."
+  },
+  "recommendations": {
+    "title": "Client recommendations panel",
+    "description": "Requests only after user interaction, showing the Vue Query boundary.",
+    "refresh": "Refresh recommendations",
+    "empty": "Load local data after clicking the button, while the first-screen profile remains server-rendered."
+  },
+  "product": {
+    "backHome": "Back home",
+    "publicData": "Public product data",
+    "addToTemplate": "Add to project template",
+    "viewGuide": "View integration guide",
+    "notFound": "Product not found"
+  },
+  "error": {
+    "notFound": "Page not found",
+    "generic": "Something went wrong",
+    "retryLater": "Please try again later.",
+    "backHome": "Back home"
+  }
+}

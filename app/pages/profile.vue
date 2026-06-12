@@ -3,18 +3,34 @@ import type { UserProfile } from '#shared/types/user'
 
 import { CalendarDays, Mail, ShieldCheck } from '@lucide/vue'
 
-const { data: user } = await useFetch<UserProfile>('/api/profile')
+const { locale, t } = useI18n()
+const { data: user } = await useFetch<UserProfile>('/api/profile', {
+  query: {
+    locale,
+  },
+})
+const profileText = computed(() => ({
+  description: t('profile.description'),
+  emptyDescription: t('profile.emptyDescription'),
+  emptyTitle: t('profile.emptyTitle'),
+  loadError: t('profile.loadError'),
+  statusMode: t('profile.statusMode'),
+  title: t('profile.title'),
+}))
+function formatJoinedAt(date: string) {
+  return t('profile.joinedAt', { date })
+}
 
 const currentUser = computed(() => {
   if (!user.value) {
-    throw createError({ statusCode: 500, statusMessage: '用户资料加载失败' })
+    throw createError({ statusCode: 500, statusMessage: profileText.value.loadError })
   }
 
   return user.value
 })
 
 useSeoMeta({
-  title: '资料 | Colorway Starter',
+  title: () => t('profile.seoTitle'),
 })
 </script>
 
@@ -22,8 +38,8 @@ useSeoMeta({
   <section class="diffuse-field min-h-[calc(100svh-4rem)] border-b">
     <PageContainer class="section-y-compact">
       <PageHeading
-        description="这个页面展示看起来像登录后的用户资料，但 v1 不绑定真实 auth provider。用户私有数据默认动态读取。"
-        title="用户资料示例"
+        :description="profileText.description"
+        :title="profileText.title"
       />
 
       <div class="mt-8 grid items-start gap-6 lg:grid-cols-[0.9fr_1fr]">
@@ -50,7 +66,7 @@ useSeoMeta({
             </div>
             <div class="flex items-center gap-3">
               <CalendarDays class="icon-control text-muted-foreground" />
-              加入时间：{{ currentUser.joinedAt }}
+              {{ formatJoinedAt(currentUser.joinedAt) }}
             </div>
             <div class="flex flex-wrap gap-2">
               <Badge v-for="item in currentUser.preferences" :key="item" variant="secondary">
@@ -65,13 +81,13 @@ useSeoMeta({
             <CardHeader>
               <CardTitle class="flex items-center gap-2">
                 <ShieldCheck class="icon-control text-primary" />
-                状态模式
+                {{ profileText.statusMode }}
               </CardTitle>
             </CardHeader>
             <CardContent>
               <EmptyState
-                description="这里预留给真实项目的订单、收藏或通知数据。"
-                title="暂无会员动态"
+                :description="profileText.emptyDescription"
+                :title="profileText.emptyTitle"
               />
             </CardContent>
           </Card>

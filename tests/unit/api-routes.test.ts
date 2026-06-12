@@ -26,12 +26,21 @@ const parseProducts = vi.hoisted(() => vi.fn((payload: unknown) => payload))
 const parseUserProfile = vi.hoisted(() => vi.fn((payload: unknown) => payload))
 
 vi.mock('#server/queries/products', () => ({
-  getProduct: vi.fn(async () => mockProducts[0]),
-  getProducts: vi.fn(async () => mockProducts),
+  getProduct: vi.fn(async (_id: string, locale: 'zh' | 'en') => ({
+    ...mockProducts[0],
+    summary: locale === 'en' ? 'English product summary.' : mockProducts[0].summary,
+  })),
+  getProducts: vi.fn(async (locale: 'zh' | 'en') => mockProducts.map(product => ({
+    ...product,
+    summary: locale === 'en' ? 'English product summary.' : product.summary,
+  }))),
 }))
 
 vi.mock('#server/queries/user', () => ({
-  getCurrentUserProfile: vi.fn(async () => mockUser),
+  getCurrentUserProfile: vi.fn(async (locale: 'zh' | 'en') => ({
+    ...mockUser,
+    plan: locale === 'en' ? 'Starter member' : mockUser.plan,
+  })),
 }))
 
 vi.mock('#shared/api/schemas', () => ({
@@ -69,16 +78,31 @@ describe('api routes', () => {
   it('商品列表返回前使用响应 schema 校验', async () => {
     const { productsHandler } = await importRoutes()
 
-    const payload = await productsHandler()
+    const payload = await productsHandler({ node: { req: { url: '/api/products' } } })
 
     expect(parseProducts).toHaveBeenCalledWith(payload)
     expect(payload).toEqual(mockProducts)
   })
 
+  it('商品列表支持英文 locale 查询参数', async () => {
+    const { productsHandler } = await importRoutes()
+
+    const payload = await productsHandler({ node: { req: { url: '/api/products?locale=en' } } })
+
+    expect(payload).toEqual([
+      expect.objectContaining({
+        summary: 'English product summary.',
+      }),
+    ])
+  })
+
   it('商品详情返回前使用响应 schema 校验', async () => {
     const { productHandler } = await importRoutes()
 
-    const payload = await productHandler({ context: { params: { id: 'canvas-kit' } } })
+    const payload = await productHandler({
+      context: { params: { id: 'canvas-kit' } },
+      node: { req: { url: '/api/products/canvas-kit' } },
+    })
 
     expect(parseProduct).toHaveBeenCalledWith(payload)
     expect(payload).toEqual(mockProducts[0])
@@ -87,9 +111,26 @@ describe('api routes', () => {
   it('用户资料返回前使用响应 schema 校验', async () => {
     const { profileHandler } = await importRoutes()
 
-    const payload = await profileHandler({ node: { res: { setHeader: vi.fn() } } })
+    const payload = await profileHandler({ node: { req: { url: '/api/profile' }, res: { setHeader: vi.fn() } } })
 
     expect(parseUserProfile).toHaveBeenCalledWith(payload)
     expect(payload).toEqual(mockUser)
+  })
+
+  it('用户资料支持英文 locale 查询参数', async () => {
+    const { profileHandler } = await importRoutes()
+
+    const payload = await profileHandler({ node: { req: { url: '/api/profile?locale=en' }, res: { setHeader: vi.fn() } } })
+
+    expect(payload).toEqual(expect.objectContaining({ plan: 'Starter member' }))
+  })
+
+  it('非法 locale 查询参数返回 400', async () => {
+    const { productsHandler } = await importRoutes()
+
+    await expect(productsHandler({ node: { req: { url: '/api/products?locale=fr' } } })).rejects.toMatchObject({
+      statusCode: 400,
+      statusMessage: '不支持的语言参数',
+    })
   })
 })

@@ -29,7 +29,7 @@ Colorway Starter 是一个单仓库 GitHub Template 风格的 C 端 Nuxt starter
 
 有效浏览器下限按 Tailwind CSS v4 计算：Chrome 111、Edge 111、Safari 16.4、Firefox 128。不要只按 Vite 默认浏览器目标判断兼容性。
 
-不得自行替换技术栈。认证、数据库、支付、对象存储、邮件、短信、Analytics、Sentry、i18n、PWA、CMS、Storybook、全局状态库和 Edge Runtime 都不是默认能力，引入前必须人工确认。
+不得自行替换技术栈。认证、数据库、支付、对象存储、邮件、短信、Analytics、Sentry、PWA、CMS、Storybook、全局状态库和 Edge Runtime 都不是默认能力，引入前必须人工确认。i18n 已由 `docs/adr/2026-06-12-nuxt-i18n.md` 确认引入。
 
 ## 环境和联网
 

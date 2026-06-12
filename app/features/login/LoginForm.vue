@@ -4,12 +4,26 @@ import { useField, useForm } from 'vee-validate'
 import { toast } from 'vue-sonner'
 import { z } from 'zod'
 
-const loginSchema = z.object({
-  email: z.email('请输入有效邮箱'),
-  password: z.string().min(8, '密码至少 8 位'),
-})
+const { t } = useI18n()
+const formText = computed(() => ({
+  email: t('login.email'),
+  emailError: t('login.emailError'),
+  formDescription: t('login.formDescription'),
+  password: t('login.password'),
+  passwordError: t('login.passwordError'),
+  passwordPlaceholder: t('login.passwordPlaceholder'),
+  submit: t('login.submit'),
+  successTitle: t('login.successTitle'),
+}))
+const loginSchema = computed(() => z.object({
+  email: z.email(formText.value.emailError),
+  password: z.string().min(8, formText.value.passwordError),
+}))
 
-type LoginValues = z.infer<typeof loginSchema>
+interface LoginValues {
+  email: string
+  password: string
+}
 
 useForm<LoginValues>({
   initialValues: {
@@ -28,7 +42,7 @@ function onSubmit() {
   formErrors.email = undefined
   formErrors.password = undefined
 
-  const result = loginSchema.safeParse({
+  const result = loginSchema.value.safeParse({
     email: email.value,
     password: password.value,
   })
@@ -40,8 +54,8 @@ function onSubmit() {
     return
   }
 
-  toast.success('模拟登录成功', {
-    description: `${result.data.email} 已通过前端表单校验。`,
+  toast.success(formText.value.successTitle, {
+    description: t('login.successDescription', { email: result.data.email }),
   })
 }
 </script>
@@ -56,7 +70,7 @@ function onSubmit() {
   >
     <FormItem>
       <Label for="email">
-        邮箱
+        {{ formText.email }}
       </Label>
       <Input
         id="email"
@@ -66,27 +80,27 @@ function onSubmit() {
         placeholder="you@example.com"
         type="email"
       />
-      <FormMessage class="form-error" :message="formErrors.email ?? emailError ?? '请输入有效邮箱'" />
+      <FormMessage class="form-error" :message="formErrors.email ?? emailError ?? formText.emailError" />
     </FormItem>
 
     <FormItem>
       <Label for="password">
-        密码
+        {{ formText.password }}
       </Label>
       <Input
         id="password"
         v-model="password"
         autocomplete="current-password"
         :aria-invalid="!!formErrors.password || !!passwordError"
-        placeholder="至少 8 位"
+        :placeholder="formText.passwordPlaceholder"
         type="password"
       />
-      <FormDescription>这是 mock 表单，不会接入真实认证。</FormDescription>
-      <FormMessage class="form-error" :message="formErrors.password ?? passwordError ?? '密码至少 8 位'" />
+      <FormDescription>{{ formText.formDescription }}</FormDescription>
+      <FormMessage class="form-error" :message="formErrors.password ?? passwordError ?? formText.passwordError" />
     </FormItem>
 
     <button class="type-control motion-control inline-flex h-10 w-full shrink-0 items-center justify-center gap-2 rounded-[var(--radius-control)] bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90" type="submit">
-      模拟登录
+      {{ formText.submit }}
       <ArrowRight />
     </button>
   </form>

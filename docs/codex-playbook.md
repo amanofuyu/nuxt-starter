@@ -36,7 +36,7 @@
 - `app/components/ui` 不得导入业务模块、mock 或 server 模块。
 - 页面和组件不得直接消费外部 DTO、后端统一响应包装、原始业务码或内部错误文案。
 - 新增外部 API 时，先收敛到 query/mapper/API 边界，不在页面、组件或 composable 中散写 URL 和 `$fetch` 错误处理。
-- 不要自行引入认证、数据库、支付、i18n、Analytics、Sentry、PWA、CMS、Storybook、全局状态库或 Edge Runtime。
+- 不要自行引入认证、数据库、支付、Analytics、Sentry、PWA、CMS、Storybook、全局状态库或 Edge Runtime。i18n 已由 `docs/adr/2026-06-12-nuxt-i18n.md` 确认。
 
 ## Git 提交规范
 

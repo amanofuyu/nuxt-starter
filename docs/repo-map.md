@@ -9,6 +9,8 @@
 | 接真实商品数据 | `server/queries/products.ts`、必要时新增 mapper/schema 测试 | DTO 不直接进入页面，先读 `docs/data-fetching.md`。 |
 | 接真实用户数据 | `server/queries/user.ts`、认证相关 ADR | 先确认认证和权限方案，页面不要读取后端用户 DTO。 |
 | 改登录表单 | `app/features/login/LoginForm.vue` | 表单可用客户端状态，校验继续用 Zod。 |
+| 改中英文文案 | `i18n/locales/*`、相关页面或组件 | 语言包 key 必须保持一致，组件内用 `useI18n()`，不要使用 `$t`。 |
+| 改本地化 mock 数据 | `server/mocks/*`、`server/queries/*`、相关 API route 测试 | API 用 `locale` 查询参数选择语言，页面仍通过 Nitro API 读取。 |
 | 增加客户端交互面板 | `app/features/*` | 不要导入 `server/*`。 |
 | 调整组件数据流或 composable | `app/features/*`、`app/composables/*`、`docs/frontend-component-guidelines.md` | 保持 props/emit 单向数据流，局部共享状态优先页面状态或 provide/inject。 |
 | 增加通用按钮或状态包装 | `app/components/common/*` | 优先复用 shadcn-vue 基础组件。 |

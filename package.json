@@ -44,6 +44,7 @@
   "devDependencies": {
     "@antfu/eslint-config": "9.0.0",
     "@nuxt/eslint": "1.16.0",
+    "@nuxtjs/i18n": "10.4.0",
     "@playwright/test": "1.60.0",
     "@tailwindcss/vite": "4.3.0",
     "@vue/test-utils": "2.4.11",

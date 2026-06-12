@@ -106,10 +106,11 @@ provide(productSelectionKey, {
 
 ## 文案和多语言
 
-当前 starter 不默认引入 i18n。新增用户可见文案时：
+当前 starter 已引入 `@nuxtjs/i18n`。新增用户可见文案时：
 
-- 保持文案靠近使用场景，避免提前建立全局翻译表。
-- 如果项目后来引入 i18n，应先记录 ADR，再统一迁移文案来源。
+- 先补 `i18n/locales/zh-CN.json` 和 `i18n/locales/en-US.json`，保持 key 完全一致。
+- 组件内显式使用 `useI18n()`，不要使用模板实例上的 `$t`。
+- 如果新增语言或改变路由策略，应先更新 ADR。
 - 不要在组件中把远端 HTML 当作可信文案直接渲染。
 
 ## 渲染态验证

@@ -1,9 +1,12 @@
+import process from 'node:process'
+
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineNuxtConfig({
   compatibilityDate: '2026-06-12',
   devtools: { enabled: true },
   modules: [
+    '@nuxtjs/i18n',
     'shadcn-nuxt',
   ],
   components: [
@@ -19,6 +22,27 @@ export default defineNuxtConfig({
   shadcn: {
     prefix: '',
     componentDir: 'app/components/ui',
+  },
+  i18n: {
+    baseUrl: process.env.NUXT_PUBLIC_SITE_URL ?? 'http://localhost:3000',
+    defaultLocale: 'zh',
+    detectBrowserLanguage: false,
+    langDir: 'locales',
+    locales: [
+      {
+        code: 'zh',
+        file: 'zh-CN.json',
+        language: 'zh-CN',
+        name: '中文',
+      },
+      {
+        code: 'en',
+        file: 'en-US.json',
+        language: 'en-US',
+        name: 'English',
+      },
+    ],
+    strategy: 'prefix_except_default',
   },
   css: ['~/assets/css/tailwind.css'],
   runtimeConfig: {

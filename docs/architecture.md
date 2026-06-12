@@ -14,6 +14,7 @@ app/components/ui     shadcn-vue 源码区
 app/components/common 项目级 UI 包装
 app/features          具体业务交互组件
 app/composables       客户端组合式函数
+i18n/locales          中英文语言包
 server/api            Nitro API routes
 server/queries        服务端读取入口
 server/mocks          mock 数据源
@@ -41,6 +42,18 @@ tests                 单元测试和 E2E 测试
 ```
 
 这样做的目的不是多套一层，而是让页面不关心数据来自 mock、数据库还是后端服务，并让客户端 bundle 永远不需要包含服务端实现。
+
+## 国际化
+
+项目使用 `@nuxtjs/i18n` 提供中英双语：
+
+- 默认语言为中文，现有路径不加语言前缀。
+- 英文路径使用 `/en` 前缀。
+- 浏览器语言自动跳转关闭，避免 starter 在不同环境下路由表现不一致。
+- 语言包放在 `i18n/locales/*`，中英文 key 必须保持一致。
+- 组件内显式使用 `useI18n()`，不要使用模板实例上的 `$t`。
+- 从 Nitro API 返回的 mock 展示数据通过 `locale` 查询参数选择语言。
+- `NUXT_PUBLIC_SITE_URL` 用于生成 i18n canonical 和 alternate SEO 链接，本地默认值为 `http://localhost:3000`。
 
 ### 数据形状边界
 
@@ -104,6 +117,7 @@ Nuxt runtime config 分两层：
 
 - 接真实商品接口：修改 `server/queries/products.ts`，必要时新增 DTO、mapper 和 query/API 测试。
 - 接真实用户系统：先确认认证方案，再替换 `server/queries/user.ts`，不要让页面直接读取后端用户 DTO。
+- 增加语言：先更新 i18n ADR，再补 `i18n/locales/*`、Nuxt i18n 配置、API locale 校验和 E2E。
 - 扩展 UI：优先新增或复用 `app/components/common/*`。
 - 增加 API Route：放在 `server/api/*`，并用 Zod 校验输入。
 - 调整环境变量：修改 `.env.example` 和 `nuxt.config.ts`，保持 server-only 与 `NUXT_PUBLIC_*` 边界。
@@ -116,7 +130,7 @@ Nuxt runtime config 分两层：
 - 数据库、ORM、迁移工具。
 - 支付、订阅、发票。
 - 对象存储、邮件、短信。
-- CMS、i18n、PWA、Sentry、Analytics。
+- CMS、PWA、Sentry、Analytics。
 - Storybook、全局状态库、复杂队列或 Edge Runtime。
 
 这些能力都需要先写清业务需求、备选方案、影响和 ADR。
