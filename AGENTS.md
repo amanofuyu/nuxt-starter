@@ -44,7 +44,7 @@ Colorway Starter 是一个单仓库 GitHub Template 风格的 C 端 Nuxt starter
 - 安装或升级依赖前，必须联网查询最新稳定版本、官方安装方式和兼容性要求。
 - 涉及依赖版本、API 行为、部署平台、运行时、价格、法规或产品状态等时效性信息时，必须联网确认。
 - 优先使用项目已有包管理器、锁文件和脚本；不要擅自切换工具链。
-- 只改文档时也要检查旧技术栈词和坏引用，避免 Next/React 术语残留到 Nuxt 文档。
+- 只改文档时也要检查关键引用和坏引用，避免无效文档入口影响后续维护。
 - 首次在本机或 CI 环境运行 Playwright E2E 前，先执行 `corepack pnpm@11.6.0 exec playwright install --with-deps chromium`。
 
 ## 工作手册
@@ -113,9 +113,6 @@ curl http://localhost:3000/api/health
 只改文档时至少运行：
 
 ```bash
-rg -n "NEXTJS|React Hook Form|lucide-react|src/" AGENTS.md README.md NUXT_AI_CONSTRAINTS.md docs .github TODO.md
 rg -n "docs/index.md|docs/data-fetching.md|docs/frontend-component-guidelines.md|docs/quality-gates.md|runtimeConfig|server/queries|ADR|DECISIONS" AGENTS.md README.md NUXT_AI_CONSTRAINTS.md docs .github TODO.md
 git diff --check
 ```
-
-第一条旧词扫描如果只命中文档中这条命令本身，不算旧技术栈残留。

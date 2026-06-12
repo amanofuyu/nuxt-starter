@@ -24,11 +24,8 @@ corepack pnpm@11.6.0 exec playwright install --with-deps chromium
 至少运行：
 
 ```bash
-rg -n "NEXTJS|React Hook Form|lucide-react|src/" AGENTS.md README.md NUXT_AI_CONSTRAINTS.md docs .github TODO.md
 rg -n "docs/index.md|docs/data-fetching.md|docs/frontend-component-guidelines.md|docs/quality-gates.md|runtimeConfig|server/queries|ADR|DECISIONS" AGENTS.md README.md NUXT_AI_CONSTRAINTS.md docs .github TODO.md
 ```
-
-第一条旧词扫描如果只命中文档中这条命令本身，不算旧技术栈残留。
 
 如果当前目录是 Git 仓库，追加：
 
@@ -38,7 +35,6 @@ git diff --check
 
 目的：
 
-- 检查旧技术栈词是否误入 Nuxt 文档。
 - 确认关键文档互相引用没有明显遗漏。
 - 检查行尾空白和 patch 格式。
 
