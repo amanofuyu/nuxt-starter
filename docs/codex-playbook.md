@@ -123,6 +123,12 @@ export NVM_DIR="$HOME/.nvm" && . "$NVM_DIR/nvm.sh"
 nvm use
 ```
 
+首次在本机或 CI 环境运行 Playwright E2E 前，需要安装浏览器二进制和系统依赖：
+
+```bash
+corepack pnpm@11.6.0 exec playwright install --with-deps chromium
+```
+
 普通代码改动至少运行：
 
 ```bash

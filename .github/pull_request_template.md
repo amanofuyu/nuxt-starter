@@ -8,9 +8,9 @@
 
 按 `docs/quality-gates.md` 选择验证范围。
 
-- [ ] `pnpm check:boundaries`
-- [ ] `pnpm verify`
-- [ ] `pnpm test:e2e`
+- [ ] `corepack pnpm@11.6.0 check:boundaries`
+- [ ] `corepack pnpm@11.6.0 verify`
+- [ ] `corepack pnpm@11.6.0 test:e2e`
 - [ ] Docker build / run / health smoke test
 - [ ] 不适用，原因：
 

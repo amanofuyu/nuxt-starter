@@ -58,7 +58,7 @@ corepack pnpm@11.6.0 typecheck
 1. 联网查询 shadcn-vue、shadcn-nuxt、Tailwind 和 Reka UI 的当前版本和迁移说明。
 2. 只更新目标组件，不做无关重排。
 3. 对比 `app/components/ui` diff，确认没有把业务逻辑写进基础组件。
-4. 运行 `pnpm check:boundaries`、`pnpm typecheck`，涉及 UI 时运行 E2E。
+4. 运行 `corepack pnpm@11.6.0 check:boundaries`、`corepack pnpm@11.6.0 typecheck`，涉及 UI 时运行 E2E。
 
 ## common 包装
 

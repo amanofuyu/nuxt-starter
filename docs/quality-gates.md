@@ -13,6 +13,12 @@ nvm use
 
 本仓库默认使用 pnpm，不要混用 npm、yarn 或 bun 修改锁文件。
 
+首次在本机或 CI 环境运行 Playwright E2E 前，需要安装浏览器二进制和系统依赖：
+
+```bash
+corepack pnpm@11.6.0 exec playwright install --with-deps chromium
+```
+
 ## 只改文档
 
 至少运行：
@@ -57,9 +63,9 @@ corepack pnpm@11.6.0 verify
 | 修改范围 | 追加验证 |
 | --- | --- |
 | 页面主流程、登录、主题、商品详情 | `corepack pnpm@11.6.0 test:e2e` |
-| `nuxt.config.ts`、runtime config、Nitro、Docker | `pnpm verify` + Docker build / health smoke |
+| `nuxt.config.ts`、runtime config、Nitro、Docker | `corepack pnpm@11.6.0 verify` + Docker build / health smoke |
 | `server/api`、`server/queries`、`server/utils/api-fetcher.ts` | 相关单测，必要时补 API route 测试 |
-| `scripts/check-ai-boundaries.mjs` | `pnpm check:boundaries` + `tests/unit/ai-boundaries.test.ts` |
+| `scripts/check-ai-boundaries.mjs` | `corepack pnpm@11.6.0 check:boundaries` + `tests/unit/ai-boundaries.test.ts` |
 | UI、响应式、动效 | E2E 或浏览器真实渲染检查 |
 | 依赖变更 | 联网查询最新稳定版本、兼容性和迁移说明 |
 

@@ -7,7 +7,7 @@
 - 采用 Nuxt 4、Vue 3、Nitro、Tailwind CSS v4 和 shadcn-vue。
 - 使用 Nitro API 作为页面与 server query 层之间的边界，避免客户端 bundle 导入 `server/*`。
 - `lucide-vue-next` 已废弃，实际采用 npm 当前推荐的 `@lucide/vue`。
-- 不默认引入认证、数据库、支付、CMS、Sentry、i18n、PWA 或大型全局状态库。
+- 迁移时不默认引入认证、数据库、支付、CMS、Sentry、i18n、PWA 或大型全局状态库；其中 i18n 后续已由 `docs/adr/2026-06-12-nuxt-i18n.md` 单独确认并覆盖默认项。
 
 ## 2026-06-12：Node 和浏览器兼容基线
 

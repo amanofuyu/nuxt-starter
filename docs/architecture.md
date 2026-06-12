@@ -112,12 +112,14 @@ Nuxt runtime config 分两层：
 - `runtimeConfig` 顶层：只在服务端可见，例如服务端 secret、内部 API base URL。
 - `runtimeConfig.public`：会暴露给客户端，例如公开 app name。
 
-新增环境变量时同步更新：
+新增 runtime config 或环境变量时同步更新：
 
 - `.env.example`
 - `nuxt.config.ts`
 - `server/utils/env.ts`
 - 相关测试和文档
+
+如果变量只供 Nuxt 模块在 `nuxt.config.ts` 配置阶段读取，也必须在文档中写清用途和默认值；其余 app/server 运行时会消费的变量应进入 `server/utils/env.ts` 做集中校验。
 
 ## UI 架构
 

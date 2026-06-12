@@ -45,6 +45,7 @@ Colorway Starter 是一个单仓库 GitHub Template 风格的 C 端 Nuxt starter
 - 涉及依赖版本、API 行为、部署平台、运行时、价格、法规或产品状态等时效性信息时，必须联网确认。
 - 优先使用项目已有包管理器、锁文件和脚本；不要擅自切换工具链。
 - 只改文档时也要检查旧技术栈词和坏引用，避免 Next/React 术语残留到 Nuxt 文档。
+- 首次在本机或 CI 环境运行 Playwright E2E 前，先执行 `corepack pnpm@11.6.0 exec playwright install --with-deps chromium`。
 
 ## 工作手册
 
